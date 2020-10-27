@@ -1,0 +1,17 @@
+very important note:
+
+O(1) = O(yeah)
+
+O(log n) = O(nice)
+
+O(nlogn) = O(k-ish)
+
+O(n) = O(ok)
+
+O(n²) = O(my)
+
+O(2ⁿ) = O(no)
+
+O(n^n) = O(fuck)
+
+O(n!) = O(mg!)
