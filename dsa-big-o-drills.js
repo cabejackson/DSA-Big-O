@@ -241,44 +241,441 @@ How many moves are needed to complete the puzzle with 3 disks? with 4 disks? wit
 What is the runtime of your algorithm?
 */
 
-function hanoi(discs, source, dest, aux) {
-    if (discs == 1) {
-        //source is the starting 
-        //dest is the destination 
-        mover(source, dest);
-    } else {
-        hanoi(discs - 1, source, aux, dest);
-        mover(source, dest);
-        hanoi(discs - 1, aux, dest, source);
-        return dest;
+// function hanoi(discs, source, dest, aux) {
+//     if (discs == 1) {
+//         //source is the starting 
+//         //dest is the destination 
+//         mover(source, dest);
+//     } else {
+//         hanoi(discs - 1, source, aux, dest);
+//         mover(source, dest);
+//         hanoi(discs - 1, aux, dest, source);
+//         return dest;
+//     }
+
+// }
+// function mover(startRod, targetRod) {
+//     targetRod.push(startRod.pop());
+//     ;
+//     // console.log(startRod, targetRod, 'moved a disc');
+//     //add counter to mover func
+//     //console.log(startRod, targetRod)
+// }
+
+// console.log(hanoi(5, [1, 2, 3, 4, 5], [], []));
+
+
+const a = { name: 'a', discs: [] };
+const b = { name: 'b', discs: [] };
+const c = { name: 'c', discs: [] };
+function newHanoi(num) {
+    for (let i = 0; i < num; i++) {
+        a.discs.push(num - i);
+        console.log(a.discs, b.discs, c.discs);
     }
-
+    //const moveCounter = [0];
+    solver(num, a, c, b);
+    //console.log('total moves were:', moveCounter);
 }
-function mover(startRod, targetRod) {
-    targetRod.push(startRod.pop());
-    ;
-    // console.log(startRod, targetRod, 'moved a disc');
-    //add counter to mover func
-    //console.log(startRod, targetRod)
-}
-
-console.log(hanoi(5, [1, 2, 3, 4, 5], [], []));
-
+const solver = (disc, source, dest, aux) => {
+    if (disc === 1) {
+        makeMove(source, dest);
+    } else {
+        solver(disc - 1, source, aux, dest);
+        makeMove(source, dest);
+        solver(disc - 1, aux, dest, source);
+    }
+};
+const makeMove = (source, target) => {
+    console.log(`I will now move from ${source.name} to ${target.name}`);
+    target.discs.push(source.discs.pop());
+    console.log(a.discs, b.discs, c.discs);
+};
+newHanoi(7);
 
 /*
 12. Iterative version
 Solve the drills 1 - 7 from your previous checkpoint(Recursion) iteratively.
+
+
+1. Counting Sheep
+Write a recursive function that counts how many sheep jump over the fence. Your program should take a number as input. That number should be the number of sheep you have. The function should display the number along with the message "Another sheep jumps over the fence" until no more sheep are left.
+
+Input: 3
+Output:
+3: Another sheep jumps over the fence
+2: Another sheep jumps over the fence
+1: Another sheep jumps over the fence
+All sheep jumped over the fence
+
+
 */
+
+/*
+Input: 3
+Output:
+3: Another sheep jumps over the fence
+2: Another sheep jumps over the fence
+1: Another sheep jumps over the fence
+All sheep jumped over the fence
+ */
+function sheepCounter(sheep) {
+    if (sheep === 0) {
+        return 'all sheep jump over the fence'
+    }
+    const first = sheep + ": another sheep jumped over the fence \n"
+    return first + sheepCounter(sheep - 1)
+}
+
+console.log(sheepCounter(3))
+
+/* 
+powerCalculator
+*/
+
+function powerCalculator(base, exp) {
+    if (exp <= 0) {
+        return `exponent should be a positive number sir!`;
+    }
+    if (exp > 1) {
+        return base * powerCalculator(base, --exp);
+    } else {
+        return base;
+    }
+}
+
+powerCalculator(10, 0);
+
+//Reverse string
+//linear time O(n)
+
+function reverseString(str) {
+    if (str === "") {
+        return "";
+    } else {
+        return reverseString(str.substr(1)) + str.charAt(0);
+    }
+}
+reverseString("hii");
+
+//iteratively
+//is this linear time? O(n)
+function betterReverseString(str) {
+    let newStr = '';
+    for (let i = str.length - 1; i >= 0; i--) {
+        newStr = newStr.concat(str[i]);
+    }
+    return newStr;
+}
+onsole.log(betterReverseString('Harry'));
+
+//reverse method 
+//is this constant time? O(1)
+function reverseString(str) {
+    return str.split("").reverse().join("");
+}
+
+
+// nth triangular number
+
+function triangularN(num) {
+    if (num === 1) {
+        return 1;
+    }
+    return triangularN(num - 1) + num;
+}
+
+triangularN(5);
+
+
+//iteratively
+function triangle(num) {
+    let star = 0;
+    for (let i = 1; i <= num; i++) {
+        star += i;
+        console.log(star);
+    }
+    return star;
+}
+
+console.log('testing triangle 3: ', triangle(3));
+
+//fibannachi
+function fiban(num) {
+    if (num === 1) {
+        return 0;
+    } else if (num === 2) {
+        return 1;
+    } else {
+        return fiban(num - 1) + fiban(num - 2);
+    }
+}
+
+//iteratively
+function fibonacci(num) {
+    if (num <= 0) return "invalid num";
+    if (num === 1) return [1];
+    if (num === 2) return [1, 1];
+
+    let sequence = [1, 1];
+    let curr = 0;
+
+    for (let i = 2; i <= num + 3; i++) {
+        curr = sequence[i - 1] + sequence[i - 2];
+        sequence.push(curr);
+    }
+
+    return sequence;
+}
+
+console.log("fibonacci sequence of 0", fibonacci(0));
+console.log("fibonacci sequence of 1", fibonacci(1));
+console.log("fibonacci sequence of 2", fibonacci(2));
+console.log("fibonacci sequence of 10", fibonacci(10));
+
+// string splitter
+
+// function stringSplitter(str, split){
+//   let idxOf = str.indexOf(str)
+//   if (str.includes(split) === false){
+//     return str
+//   }
+
+// return [str.slice(0, str.indexOf(split))].concat(stringSplitter(str.slice(str.indexOf(split) + 1), split))
+
+// }
+
+function strSplit(str, char, results = []) {
+    if (str.indexOf(char) === -1) {
+        results.push(str);
+        return results;
+    }
+
+    const charSpot = str.indexOf(char);
+    const subStr = str.slice(0, charSpot);
+    const remain = str.slice(charSpot + 1);
+    results.push(subStr);
+    //console.log(results)
+    return strSplit(remain, char, results);
+}
+
+strSplit("02/02/2020", "/");
+
+console.log(strSplit("02/20/2020", "/"));
+
+fiban(6);
+
+//factorial
+function factorial(num) {
+    if (num === 1) {
+        return 1;
+    } else {
+        return num * factorial(num - 1);
+    }
+}
+
+console.log(`factorial of 5 ${factorial(5)}`);
+
+//iteratively
+function factorial(n) {
+    let val = 1;
+    for (let i = 1; i <= n; i++) {
+        val *= i;
+    }
+    return val;
+}
+
+
+console.log('factorial of 3', factorial(3));
+console.log('factorial of 5', factorial(5));
+console.log('factorial of 6', factorial(6));
+
+
+
+
+
+//maze attempt
+
+let mySmallMaze = [
+    [" ", " ", " "],
+    [" ", "*", " "],
+    [" ", " ", "e"],
+];
+
+let maze = [
+    [" ", " ", " ", "*", " ", " ", " "],
+    ["*", "*", " ", "*", " ", "*", " "],
+    [" ", " ", " ", " ", " ", " ", " "],
+    [" ", "*", "*", "*", "*", "*", " "],
+    [" ", " ", " ", " ", " ", " ", "e"],
+];
+
+// function mazeExit (maze, n, m, results){
+// if (maze[n][m] === 'e'){
+//  return results
+// }
+// if (maze[n][m + 1] == ' ' || maze[n][m +1] === 'e'){
+//  results += 'r';
+//  maze[n][m] = '*';
+//  return (mazeExit(maze, n, m + 1, results))
+// } else if (maze[n + 1][m] == ' ' || maze[n + 1][m] === 'e'){
+//  results += 'd';
+//  maze[n][m] = '*';
+//  return (mazeExit(maze, n + 1, m, results))
+// } else if (maze[n - 1][m] == ' ' || maze[n - 1][m] === 'e'){
+//  results += 'u';
+//  maze[n][m] = '*';
+//  return (mazeExit(maze, n - 1, m, results))
+// } else if (maze[n][m - 1] == ' ' || maze[n][m - 1] === 'e'){
+//  results += 'l';
+//  maze[n][m] = '*';
+//  return (mazeExit(maze, n, m - 1, results))
+// }
+
+// }
+
+// mazeExit(maze, 0,0, '')
+
+function mazeExit(maze, n, m) {
+    let currSpot = "-";
+
+    maze[n][m] = currSpot;
+    let path = "";
+    switch (" ") {
+        case maze[n][m + 1]:
+            return (path += "R" + mazeExit(maze, n, m + 1));
+            break;
+        case maze[n][m - 1]:
+            return (path += "L" + mazeExit(maze, n, m - 1));
+            break;
+        case maze[n + 1][m]:
+            return (path += "D" + mazeExit(maze, n + 1, m));
+            break;
+        case maze[n - 1][m]:
+            return (path += "U" + mazeExit(maze, n - 1, m));
+            break;
+    }
+    switch ("e") {
+        case maze[n][m + 1]:
+            return (path += "R" + " Completed");
+            break;
+        case maze[n][m - 1]:
+            return (path += "L" + " Completed");
+            break;
+        case maze[n + 1][m]:
+            return (path += "D" + " Completed");
+            break;
+        case maze[n - 1][m]:
+            return (path += "U" + " Completed");
+            break;
+        default:
+            return "There are no more exits";
+            break;
+    }
+}
+mazeExit(maze, 0, 0);
+
+// anagrams
+function anagrams(str) {
+    let results = [];
+    function traverse(str, checked = "") {
+        if (!str) {
+            results.push(checked);
+        }
+        for (let i = 0; i < str.length; i++) {
+            traverse(str.slice(0, i) + str.slice(i + 1), checked + str[i]);
+        }
+    }
+    traverse(str);
+    return results;
+}
+anagrams("east");
+
+
+function findBinary(num, str = '') {
+
+
+    if (num === 0) {
+        return str.split("").reverse().join("") || 0
+    }
+
+    str += num % 2
+    let newNum = parseInt(num / 2)
+
+    return findBinary(newNum, str)
+
+}
+
+findBinary(13)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 13. Recursive Big O
 Take your solutions from the recursive exercises
 that you completed in the previous checkpoint
 and identify the time complexities (big O) of each of them.
+
+ANSWERED w/in each problem
 */
 
 /*
 14. Iterative Big O
 Take your solutions from the iterative exercises today
 and identify the time complexities (big O) of each of them.
+ANSWERED w/in each problem
+
 */
+
+
+let count = 0
+function hanoi(discs, source, dest, aux) {
+    if (discs == 1) {
+        mover(source, dest);
+        count++
+    } else {
+        hanoi(discs - 1, source, aux, dest);
+        mover(source, dest);
+        count++
+        hanoi(discs - 1, aux, dest, source);
+        return dest + ` count is. . . ${count}`;
+    }
+}
+function mover(startRod, targetRod) {
+    console.log(`[${startRod}] [${targetRod}] has become. . .`)
+    targetRod.push(startRod.pop());
+    console.log(`[${startRod}] [${targetRod}]`)
+}
+console.log(hanoi(5, [1, 2, 3, 4, 5], [], []));
